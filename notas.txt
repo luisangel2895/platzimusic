@@ -1,0 +1,492 @@
+//Introduccion a Vue.js
+Esta libreria esta orientada a crear interfaces de usuario, sus principales caracteristicas
+son :
+	-framework progresivo -> poco a poco podemos ir incrementando la complejidad de la 
+		implementacion del framework , si nesesitamos algo sensillo es el framework
+		mas sencillo de implementar
+	-model view -> esta orientado a modelos y vistas atadas a los modelos
+	-reactivo -> al cambiar el estado de los modelos las vistas se actualizaran 
+		automaticamente
+	-vue.js core -> se orienta a la ui para el resto de funciones existen muchas 
+		librerias
+	-componentes -> esta orientada a componentes reutilizable
+	-facil de aprender
+	-vue.js + herramientas + librerias = SPA (single page aplication muy completa) pero
+		si se quiere hacer cosas no tan complejas basta con vue.js
+
+Como se menciono cada vez q cambia el estado de un modelo vue.js renderiza este nuevo estado
+en la vista y esta cambia automaticamente, cualquier evento q programemos podemos hacer q
+cambie haga q cambie el estado de nuestros modelos y al hacer esto automaticamente ya 
+cambiarian las vistas
+Vue.js viene luego de react y angular y ahora dare paso a algunas conclusiones de la 
+comparacion de este nuevo framework con react y angular :
+	-vue.js es mas rapido q angular y react solo superado por vanilla q es js puro
+	
+Vue vs react :
+	SIMILITUDES :
+	-vue.js al igual q react tiene un DOM virtual para identificar a los modelos, cada
+	 vez q cambia algo en el dom virtual el cambio se produce en el dom real
+	-ambas tienen componentes reutilizable
+	-la libreria core de ambos osea vue.js y react como tal solo sirve para crear 
+	 interfaces de usuario para cosas mas complejas se usan librerias en vue vuex y en 
+	 react redux.
+	-ambos minimizan las interaccion con el DOM y los calculos de JavaScript
+	VENTAJAS DE VUE :
+	-react es mas lento a la hora del desarrollo por el numero de logs q se originan
+Vista de react vs vista de vue :
+codigo de react :
+En react el html se coloca dentro de un metodo llamado render() y al final el resultado de 
+este metodo es lo q se dibuja en la pantalla
+	-ventajas -> podemos usar un monton de codigo de javascript sin limites
+		-tiene herramientas muy buenas para escribir este codigo en equipo
+	-desventajas -> q el codigo es mas complejo de entender para un disenador 	
+codigo de vue:
+En vue.js los templates se tienen un html y dentro del html se tienen etiquetas especiales 
+inclusive algunas etiquetas de logica como para indicar si se quiere q aparezca un elemento 
+o no
+ 	-ventajas -> menor cantidad de codigo y mas claro y entendible , en vue se dice q en
+		vez de como porque existe casi una sola forma de codigo para lograr cada
+		cosa, inclusive con vue se puede hacer codigo solo con etiquetas html sin 
+		nesesidad de usar modelos o codigo javascript
+		- permiten usar procesadores como sass, en cambio en react solamente podemos
+		usar jsx
+css de react :
+consiste en declara el css de los componentes pero en codigo java script (jsx)
+css de vue :
+-para el css podemos usar ccs puro o sass, stylus, etc
+-ademas se puede agregar un atributo al css de un componente llamado "scoped" con este 
+atributo hacemos q este componente tenga un identificador unico en toda el app con esto 
+hacemos q los atributos del componente sean independientes al del resto de componentes 
+
+Cuando en el app tenemos muchos componentes interactuando o q realizan estados muy complejos
+ya combiene usar las libreria vuex o redux en caso de react estas librerias unen componentes
+en un nuevo componente con un nuevo estado q es mas facil de usar
+
+vue-router es una libreria de vue q tiene su contraparte en react con el nombre react-router
+q nos permite crear rutas anidadas y q podemos nombrar, poder usar el historia de html5,
+obtener datos cuando cambia una url, componentes para renderizar un link, etc
+
+Comparacion vue.js vs angular :
+	-en angular escribir codigo con typescript es obligatorio en cambio en vue.js no 
+	-vue js pesa la mitad de angular
+	-angular es un framework bastante grande q no solo se encarga de la vista sino de
+	las rutas y otros componentes, encambio vue solamente se encarga de las vistas
+	-la curva de aprendizaje de vue.js es menor 
+
+
+//Hola mundo con Vue.js
+primero creamos un archivo llamado index.html ahi creamos la estructura basica de html y 
+en el body al final de este colocaremos el script de inclusion de la libreria de vue.js
+este script lo encontramos en la pagina de vue.js llamada vuejs.org
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+Ahora bien la definicion de los modelos de vue.js con sus estados eran en un script en el
+body luego del script q incluye vue.js osea al final del body.
+Ahora al principio del body creamos un div llamado app donde se colocara hola mundo con vue
+para esto el mundo se pondra como una variable llamada nombre :
+	<div id="app">
+            hola {{ nombre }}
+        </div>
+	-> en vue las variables se escriben dentro de 2 corchetes
+Ahora en el script donde se definen los modelo ponemos :
+	<script type="text/javascript">
+            let app = new Vue({ -> aca definimos el objeto 
+                el: '#app', -> aca definimos con q parte del dom se relaciona este objeto
+				con el identificador de css #
+                data: { -> aca ponemos el contenido del objeto de manera directa o en forma
+					de json del valor de sus variables
+                    nombre: 'Luis' -> aca se muestra el valor de la variable de la data 
+					del objeto
+                }
+            })
+        </script>
+
+NOTA :
+	-Con ctrl + shift + r recargo una pagina desde 0 por lo q se puede usar para ver
+	 como cambia la pagina ya q primero se muestra el html y luego recien se carga el js
+	-En la consola se pueden ver los errores
+
+Podemos ver la reactividad de vue.js yendo la consola donde podemos cambiar la data del 
+objeto poniendo :
+	app.nombre = "mundo"
+	-> con esto en vivo cambio la data del objeto y ahora en la pantalla mostrara 		
+	hola mundo, obiamente este cambio es solo para el navegador y no para el codigo
+	pero sirve como ejemplo para mostrar la reactividad de vue
+
+Ahora agregaremos un link dentro del objeto app y pondremos como variables lo q diria el
+link ademas tambien ponemos como variable la url : 
+	<a v-bind:href="url">{{ pagina }}</a>
+	-> para poner la url como variable debemos de usar el atributo de vue v-bind:href
+	con este atributo indicamos q la url sera una variable en este caso con el 
+	nombre url, tambien podemos usar el atributo :href solo y funciona igual y es mas
+	corto es la manera mas optimizada de poner una url como variable
+Ahora en el objeto de js agregamos el valor de estas variables :
+	        data: {
+                    nombre: 'Luis',
+                    url: 'https://google.com',
+                    pagina: 'ir a google'
+                }
+	-> agregamos el valor de la variable url y pagina y vemos q la pagina sigue
+	funcionando igual q al inicio 
+
+//Manejo de condiciones con Vue.js
+Para el manejo de condicionales con vue usaremos el atributo v-if y lo colocaremos dentro 
+de alguna etiqueta q si recibe como parametro true mostrara la etiqueta y si es false no la
+mostrara
+
+En el codigo agregamos una nueva variable del objeto app llamada mostrar :
+	mostrar: true
+Ahora le colocaremos a la etiqueta del link a google es atributo v-if con el valor de la 
+variable mostrar :
+	<a v-if="mostrar" :href="url">{{ pagina }}</a>
+	-> si le colocariammos como valor a v-if false ya no apareceria esta etiqueta
+
+Ahora veremos como hacerlo con varios elementos, para esto podemos :
+	-poner a todo un grupo de etiquetas v-if="mostrar" ya sea con un div q los contiene 
+	 o ponerle a cada uno del grupo
+	-una opcion es colocar todo el grupo de elementos dentro de una etiqueta 
+	 llamada template y a esta etiqueta colocarle el atributo v-if , esta etiqueta 
+	 template no es visible en el codigo y cuando el elemento no se muestra desaparece
+	 del codigo, en los template no se puede usar v-show porque no son elementos de html
+
+	    <template v-if="mostrar">
+                    hola {{ nombre }} 
+                    <a v-if="mostrar" :href="url">{{ pagina }}</a>
+                    HOLA PERRO
+            </template>
+
+	-otra opcion es poner todos los elementos dentro de un div pero a este div le 
+	agregamos la etiqueta v-show donde si recibe true mostrara el elemento y si 
+	recibe false no lo mostrara en la pantalla pero si en el codigo porque lo q hace
+	es q le coloca a la etiqueta el atributo css display:none
+
+	    <div v-show="mostrar">
+            	perro
+            </div>
+
+
+NOTA :  -Todas las etiquetas soportan v-if
+	-Lo mas rapido es usar v-show para cuando el elemento tiene interacciones del	
+	 usuario
+	-En el codigo de la pagina ya en el navegador no aparecen las etiquetas especiales 
+	 de view
+	-En esta version de view al parecer ya no hay soporte para v-show
+ 
+
+//Filtro de datos en Vue.js
+Ahora limpiamos un poco el proyecto y borramos el link y dentro del div con id app colocamos
+una variable titulo y subtitulo q definiremos en las variables del objeto de vue
+	<div id="app">
+            <h1>{{ titulo }}</h1>
+            <h2> {{ subtitulo }}</h2>
+        </div>
+	En el objeto :	
+	data: {
+              titulo: "Estas en platzi",
+              subtitulo: "Estas en el curso de vue.js"
+              }
+
+Los filtros en vue.js se refiere a que una variable de vue.js pase por un filtro antes de
+mostrarse por la pantalla, los filtros dentro del codigo html se colocan luego de la 
+variable separados con un "|", en este caso filtraremos el titulo con un filtro llamado
+mayusculas y al subtitulo con un fitro llamado minusculas :
+	<div id="app">
+            <h1>{{ titulo | mayusculas}}</h1>
+            <h2> {{ subtitulo | minusculas}}</h2>
+        </div>
+	
+Ahora crearemos los filtros estos se crean dentro del objeto y la definicion de cada 
+filtro es una funcion donde se indica q se quiere q haga el filtro, y estos filtros dentro
+del objeto se colocan dentro de la variable filters en el objeto :
+
+	        filters: {
+                    mayusculas: function(str) {
+                        return str.toUpperCase()
+                    },
+                    minusculas: function(str) {
+                        return str.toLowerCase()
+                    }
+                }
+		-> en este caso el filtro mayusculas y minusculas convierten en mayusculas 
+		y minuscula el strig q filtran mediante una funcion de javascript
+
+Se pueden concatenar los filtros, de esta manera el resultado de la primera filtracion 
+pasa por el segundo filtro y asi sucesivamente :
+	<h2> {{ subtitulo | minusculas | mayusculas}}</h2>
+	-> el resultado de este filtro es q el subtitulo esta escrito en mayusculas
+
+
+//Control de eventos con Vue
+Ahora haremos la interacciones de los usuario con los botones, inputs, etc y los eventos 
+q estas interraciones originan
+
+Haremos el ejemplo de un contador q cada vez q presionemos un boton este contador aumente 
+en 1 en vivo para esto primero limpiaremos el codigo, entonces:
+En el html :
+	<div id="app">
+            <button v-on:click="sumar">Sumar 1</button>
+            <button @click="restar">Restar 1</button>
+            El contador esta en {{ contador }}
+        </div>
+	-> podemos escribir q un boton tiene un evento de 2 formas como se observa, y estos
+	eventos lo escribimos en la definicion del objeto
+Eventos :
+	methods: {
+                    sumar: function () {
+                        this.contador ++
+                    },
+                    restar: function () {
+                        this.contador --
+                    }
+                }
+	-> los eventos se colocan en la definicion del objeto dentro del atributo llamado 
+	methods
+	-> Si hariamos un arroy function el this hace referencia al objeto padre de este
+	 objeto y si no hay un objeto padre hace referencia al objeto windows ejemplo :
+	sumar: () => {this} -> hace referencia al objeto padre, en este caso al objeto 
+			windows
+
+Tambien podemos definir el metodo en la misma etiqueta pero solo para eventos pequenos :
+	            <button v-on:click="contador++">Sumar 1</button>
+
+
+//Manejo de formularios con Vue :
+NOTA : para q webstorm funcione como IDE de vue :
+	-instalamos node.js client en la pc desde su web
+ ->Nose porque pero se borro :( asi q lo hare como resumen de lo q me acuerdo se hace como
+ejemplo 2 formulariso para entender el funcionamiento de vue en estos :
+
+ejemplo1 : se crea un input y lo q ingresa por el input aparece en la parte inferior como
+	mayusculas :
+	HTML :
+	<input type="text" name="nombre" placeholder="Ingresa tu nombre" v-model="nombre">
+            <p>Tu nombre en mayuscula es :{{ nombre | uppercase }} </p>
+		-> en la parte inferior del input aparecera un parrafo con lo q se escribe
+		en mayusculas mediante un filtro, para q podamos reconoce lo q escribimos
+		dentro del input le agregaremos la etiqueta v-model con esta convertimos
+		a este input en un objeto q se encuentra dentro del objeto app
+	JSCRIP:	
+		data: {
+                    nombre : '',
+                },
+		-> en data definimos q este objeto se inicializara con null y ya luego 
+		cuando alguien ponga algo en el input se llenara este objeto y luego se 
+		llamara su contenido para el filtro
+		filters: {
+                   uppercase: function (str) {
+                       return   str.toUpperCase();
+                   }
+                },
+		-> aca creamos el filtro de convertir todo en mayusculas, este filtro en el
+		html recibe el contenido del objeto nombre y lo convierte en mayusculas con 
+		este filtro
+
+ejemplo2 : se crea un formulario con checkbox donde cada unos de los inputs se convertira
+	en un objeto y se almacenara en un array de objetos, tambien este formulario
+	al presionar el boton de submit no enviara los datos sino q pasara por un proceso
+	antes del envio mediante la etiqueta v-on:submit.prevent="submit"
+	HTML :
+	     <form action="" method="get" v-on:submit.prevent="submit">
+                <h2>Cuales son tu cursos favoritos ?</h2>
+                <input type="checkbox" id="vue" value="vue" name="cursos" v-model="cursos">
+                <label for="vue">Curso de Vue Js</label>
+                <input type="checkbox" id="seo" value="seo" name="cursos" v-model="cursos">
+                <label for="seo">Curso de SEO</label>
+                <input type="checkbox" id="react" value="react" name="cursos" 
+			v-model="cursos">
+                <label for="react">Curso de React y Redux</label>
+                <button type="submit">Enviar</button>
+            </form>
+		-> primero en el formulario le agregamos v-on:submit.prevent="submit" esta
+		etiqueta hace q el formulario antes de enviar los datos pase por una funcion
+		en este caso la funcion submit
+		-> tambien los inputs se convirtieron en objetos con la etiqueta v-model, 
+		todas tienen el mismo nomre de objeto esto hace q este nombre comun sea 
+		un array de objetos 
+			
+	JSCRIPT :
+		data: {
+                    cursos : []
+                },
+		methods: {
+                    submit: function () {
+                        console.log('Se ejecuta el metodo submit');
+                        console.log(this.cursos);
+                    }
+                }
+		-> como se menciono cursos se trata de un arreglo de objetos por lo q lo
+		inicializamos como un arreglo vacio, ademas tambien definimos la funcion 
+		submit q escribe en la consola q cursos fueron seleccionados del formulario
+		como se menciono, estas funciones de proceso antes del envio de un form
+		generalmente se usan para hacer procesos de validacion de formularios por
+		el lado del frontend 
+
+//Listar elementos con Vue.js
+Ahora veremos los ciclos en vue, primero eliminaremos todo lo referido con el primer 
+formulario y optimizaremos el segundo formualario con estructuras ciclicas con vue
+
+NOTA : Con (alt+enter) hacemos q el codigo de vue q aparece rojo lo reconozca, el 
+	autocompletado si funciona bien
+
+Primero crearemos un arreglo llamado cursos con el contenido q tendra el checkbox en el 
+formulario, luego crearemos otro arreglo llamado cursosSeleccionados donde ahora este sera
+el q se ponga en v-model y tendra todos los cursos seleccionados en forma de un array de 
+objetos
+	HTML :
+	<div id="app">
+            <form action="" method="get" v-on:submit.prevent="submit">
+                <h2>Cuales son tu cursos favoritos ?</h2>
+                <template v-for="curso in cursos">
+                    <input type="checkbox" v-bind:id="curso.value" 
+		v-bind:value="curso.value" name="cursos" v-model="cursosSeleccionados">
+                    <label v-bind:for="curso.value">{{ curso.nombre }}</label>
+                </template>
+            </form>
+        </div>
+	-> reducimos el formulario un formulario q contiene un template con el q podemos
+	hacer iteracion en este caso de un elemento del checkbox para crear todo el checkbox
+	se observa q para esto se usa la etiqueta v-bind con las etiquetas, se usa template
+	tambien para q no se pueda ver en el navegador
+	-> como se menciono se usa el v-model con cursosSeleccionados osea q esta parte del 
+	checkbox se convertira en una variable 
+
+NOTA : con v-model no se convierte en un objeto a la etiqueta sino en una variable y cuando 
+	se colocan varios con el mismo nombre estos se almacenan en un array de variables 
+	pero vue grega a este array de variables un objeto q contiene informacion acerca de
+	otros argumentos en el proceso de creacion del array 
+
+	JSCRIPT :
+		data: {
+                    cursos : [
+                        {nombre : 'Curso de Vue', value : "vue"},
+                        {nombre : 'Curso de SEO', value : "seo" },
+                        {nombre : 'Curso de React', value : "react"}
+                    ],
+                    cursosSeleccionados :[]
+                },
+                methods: {
+                    submit: function () {
+                        console.log('Se ejecuta el metodo submit');
+                        console.log(this.cursosSeleccionados);
+                    }
+                }
+	-> aca creamos el arreglo q pondremos en el html con el nombre de cursos y tambien 
+	creamos el arreglo de cursosSeleccionados este arreglo sera el q contendra todas 
+	las variables seleccionadas en el checkbox, ademas tambien como el formularo sigue
+	teniendo la caracteristica v-on:submit.prevent aca se encuentra el metodo submit 
+	donde se muestran los cursos seleccionados 
+
+
+//Como crear componentes de Vue.js
+Ahora veremos como crear compoenente de vue, estos componente se usan para reutilizar el 
+codigo, es decir todo un codigo de html se remplazaran por una etiqueta con el nombre del 
+elemento, en este caso reemplazaremos el input del formulario por la etiqueta curso
+
+Para esto hay q tener en cuenta q se tienen etiquetas padres e hijas las padres pasan props
+a a sus hijos, estos hijos con estas propiedad del padre no deben modificarlas deben de
+eviar enventos al padre para q el padre modifique sus propiedades y la vuelva enviar a sus
+hijos
+Entonces basandonos en estos conceptos crearemos el compoenente llamdo curso :
+PADRE :	
+	HTML :
+		<template v-for="curso in cursos">
+                    <curso :curso="curso" v-on:checked="selectCurso"></curso>
+                </template>
+		-> simplemente en el html agregamos una etiqueta llamda cursos en la cual 
+		por su variable llamda curso recibe el objeto curso del arreglo cursos del 
+		padre ademas tambien en la etiqueta
+		-> tambien vemos q se agrego el metodo checked ya q se trata de un checkbox
+		y en este metodo se mandara el metodo selectCurso osea este metodo sera el 
+		metodo con el cual el padre q es app modifique sus propiedades cuando le 
+		diga el evento del hijo curso
+	JSCRIPT :
+		methods: {
+                    submit: function () {
+                        console.log('Se ejecuta el metodo submit');
+                        console.log(this.cursosSeleccionados);
+                    },
+                    selectCurso: function (curso, checked) {
+                        if (checked){
+                            this.cursosSeleccionados.push(curso)
+                        } else {
+                            let index = this.cursosSeleccionados.indexOf(curso);
+                            this.cursosSeleccionados.splice(index, 1)
+                        }
+                    }
+                    
+                }
+		-> aca vemos el metodo selectCurso q como se menciono es el metodo con el 			cual el padre modifica sus propiedades de acuerdo al evento q le llega del 
+		hijo, en este caso si el evento del hijo q es verdadero el curso se 
+		selecciona y va al arreglo de variables cursosSeleccionados y si luego 
+		se deselecciona este arreglo elimina a ese curso de su arreglo
+
+HIJO : el hijo es la etiqueta curso 
+	HTML : es el mismo ya q en el html el padre es app y el hijo es la etiqueta curso
+
+	JSCRIPT :
+		Vue.component('curso', {
+                props: ['curso'],
+                methods: {
+                    onChange: function (ev) {
+                        this.$emit('checked', this.curso.value, ev.target.checked)
+                    }
+                },
+                template: '<div><input type="checkbox" :id="curso.value" 
+		:value="curso.value" :name="curso.nombre" @change="onChange">' +
+                    '<label :for="curso.value">{{ curso.nombre }}</label></div>'
+            	});
+		-> entonces aca en js creamos el componente mediante Vue.component y ahi 
+		le colocamos los parametros del componente :
+			props -> este parametro es las propiedades q recibe el elemento
+				generalmente del padre en este caso es curso ya q como 	
+				se menciono en el html recibe el objeto de curso in cursos
+				bajo el nombre de la variable curso 
+			methods -> aca definimos el evento q tiene este hijo q le manda al 
+				padre para q este modifique sus propiedades, ahi el metodo 
+				se llamara onChange y tiene un metodo $emit q es el q
+				emite hacia el padre lo q queremos q en este caso es el 
+				marcado o desmarcado
+			template -> aca vemos q estructura html tendra nuestro elemento cabe
+				notar q en esta estructura se colocan los datos en funcion 
+				de la propiedad recibida del padre
+
+NOTA : en el template si se tienen un input y un label de un formulario se deben de colocar
+	dentor de un div proque o sino no se muestra el label proque lo identifica como 
+	separados y no distingue el label por lo q lo elimina
+
+	-> Entonces para entender el hijo por medio de la propidead onChange pide un cambio
+	de sus propiedades al padre las variables q envia esta funcion le llegan al padre
+	mediante la funcion selectCursos y en funcion de lo enviado realiza un cambio en 
+	sus propiedades como almacenar un curso o no dentro como varible dentro del array
+	de varibles cursosSeleccionados
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
