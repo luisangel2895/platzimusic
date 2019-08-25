@@ -461,7 +461,44 @@ NOTA : en el template si se tienen un input y un label de un formulario se deben
 
 
 
-
+//PlatziMusic con Vue.js
+Ahora descargaremos una plantilla de vue de un repositorio de git hub mediante la terminal
+esta plantilla la usaremos para un proyecto el cual llamaremos platzimusic entonces para 
+inicializar la platinlla hacemos lo siguiente :
+	-primero instalar la ultima version de nodejs en la pc desde su pagina web
+		https://nodejs.org/en/
+	-ahora en la nuestra pc instalar vue-client para q nuestra pc reconozca vue como 
+	interprete y como lenguaje
+		npm install -g vue-cli
+	-ahora desde la terminal vamos a la carpeta vue en el escritorio ya q dentro de esta
+	carpeta ira una carpeta con el proyecto platzimusic, entonces dentro de la carpeta 
+	vue para importar la plantilla hacemos :
+		vue init webpack-simple platzimusic
+		-> con esto dentro de vue se crea una carpeta llamada platzimusic donde se 
+		encuentra nuestra plantilla de vue este proyecto viene con un archivo json
+		donde se encuentra las dependencias q se nesesitan instalar para q el 
+		proyecto corra
+	-entonces ahora intalamos las dependencias del json similar a como se instala
+	composer pero con el comando :
+		npm install
+		-> es este comando porque el q instalara las dependencias sera node con npm
+	-como el proyecto es un poco antiguo corregimos los errores de instalacion con el 
+	comando :
+		npm audit fix
+	-ahora desde dentro de la carpeta platzimusic dentro de la terminal podemos  
+	iniciar el proyecto para q se inicie corriendo con un servidor de node interno de 
+	nuestra pc esto es posible porque intalamos nodejs y crea este servidor con un 
+	script en el json del proyecto, entonces para esto hacemos :
+		npm run dev
+		-> con esto abre el navegador con el proyecto corriendo desde el servidor
+		interno de nodejs localhost:8080
+	
+Ahora una cossa importante de la instalacion es q en esta plantailla es q aparte del script
+para poder correr la plantilla en un servidor interno tambien se instalo un script llamado
+hot con esto desde el codigo cualquier cambio q hagamos y guardemos se realizara el cambio
+en la pagina automaticamente sin nesesidad de q nosotros recarguemos el navegador esto sera
+valido casi para la mayoria de componentes de vue aun asi algunos componentes requeriran una
+recarga de la pagina.
 
 
 
