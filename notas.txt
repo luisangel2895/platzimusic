@@ -500,6 +500,35 @@ en la pagina automaticamente sin nesesidad de q nosotros recarguemos el navegado
 valido casi para la mayoria de componentes de vue aun asi algunos componentes requeriran una
 recarga de la pagina.
 
+//Incorporando Stylus y Pug
+Ahora agregaremos stylus y pug en el proyecto, primero stylus q es un preprocesador de css q
+nos permite escribir css de otra manera como con variables, etc y pug es un procesador de 
+html asi como en laravel lo es blade
+Ahora incluiremos estos 2 en el proyecto para esto desde la consola en la carpeta del
+proyecto instalamos las dependencias para stylus y pug :
+	npm install --save-dev pug pug-loader stylus stylus-loader
+	-> con esto se instala pug y stylus y ademas se instalan otras 2 librerias llamadas
+	pug-loader y stylus-loader estos se instalan para q pueda interpretar la plantilla
+	webpack q tenemos
+Ahora vemos q este template de vue q descargamos tiene ciertas caracteristicas como por 
+ejemplo q en App.vue se encuentra el index y en este el codigo html se encuentra dentro de
+un template mas abajo se encuentra el script de la pagina ahi pondremos toda la logica de 
+vue y mas abajo se encuentra el codigo en css , en vue esto es una ventaja comparandola con
+react ya q en react el codigo css se encuentra en js, ahora si queremos ver nuestro proyecto
+nos aparecera vacio porque no reconoce nuestro codigo por lo q ahora app.vue debemos de 
+llevarlo a codigo con pug y stylus para esto :
+	para pug -> vamos al navegador a "html 2 jade" y ahi convertira el codigo html a 
+		codigo pug , recomendado :
+			https://html2pug.now.sh/
+		-> luego colocamos el codigo en app.vue en reemplazo del html, recordar
+		q la identacion es importante es como pyton ademas el template q contiene a
+		todo el html colocarle lang=pug	para q reconozca el lenguaje
+			<template lang="pug">
+	para stylus -> vamos al navegador a "css to stylus" ahi convertirmos el codigo css 
+		a stylus y lo reemplazamos en app.vue recordar q aca tambien la identacion
+		es importante como phyton, ademas al style q contiene al css colocarle
+		lang=stylus para q reconozca el lenguaje
+			<style lang="stylus">
 
 
 
