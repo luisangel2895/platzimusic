@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "pug": "^2.0.4",
-    "vue": "^2.5.11"
+    "vue": "^2.6.10"
   },
   "browserslist": [
     "> 1%",

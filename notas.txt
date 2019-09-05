@@ -530,11 +530,102 @@ llevarlo a codigo con pug y stylus para esto :
 		lang=stylus para q reconozca el lenguaje
 			<style lang="stylus">
 
+//Configurando el API de LastFm en vue.js
+Usaremos el api de lastfm para obtener los artistas top de los paises y usarlos en nuestro 
+proyecto para esto vamos a :
+	https://www.last.fm/api/
+	-> ahi vamos a get a API account y nos creamos una cuenta en la pagina para usar 
+	su API y luego creamos la cuenta para el api ahi ponemos :
+		application name -> platzi music
+		description -> ponemos una description cualquiera
+		callback url -> colocamos una url ficticia y en application home igual 	
+			colocamos una url ficticia
+	Esto nos dara los siguientes datos para q usemos el API :
+		Application name	platzimusic
+		API key	1056ee2ff549e5388bcd1d50d6b05f06
+		Shared secret	1b024ce91a5e63c1304643690fc80def
+		Registered to	luisangel2895
+Ahora estos datos los usaremos en el app para esto primero creamos una carpeta dentro de src
+llamapa api y dentro un archivo llamado config.js y ahi le colocamos la configuracion 
+siguiente :
+	export default {
+  	appname: 'platzimusic',
+ 	 apiKey: '1056ee2ff549e5388bcd1d50d6b05f06',
+  	secret: '1b024ce91a5e63c1304643690fc80def',
+  	registeredTo 'luisangel2895'
+	}
+Ahora en app.vue borramos el codigo pug q teniamos y empezamos a crear el app en pug
+	pug:
+	h1 PlatziMusic
+    	ul
+      	  li(v-for="artist in artists") {{ artist.name }}
+	
+	js :
+	export default {
+  	name: 'app',
+  	data () {
+    	return {
+      	artists: [
+      	   { name: 'artista 1' },
+       	   { name: 'artista 2' },
+       	   { name: 'artista 3' },
+       	   { name: 'artista 4' }
+      	]
+    	}
+  	}
+	}
+Ahora vamos a la pagina y vamos a getTopArtis y decimos q lo queremos por json :
+	https://www.last.fm/api/show/geo.getTopArtists
+	-> esto nos mandara a un url donde debemos de reemplazar YOUR_API_KEY POR nuestro
+	API KEY como lo q creara un nuvea url q nos mostrar los artistas top de country 
+	q nosotros colocaremos tambien en la url como peru, y con esto vemos q la pagina
+	muestra un json de los artistas top de peru, con esto solamente vemos el
+	funcionamiento de la API
 
 
+Ahora en nuestro proyecto dentro de la carpeta api creamos un archivo llamdo index.js
+dentro de este archivo ponemos lo siguiente :
+	index.js :
+	import config from './config'; -> importamos el archivo config donde tenemos el key
+	const { apiKey } = config; -> traemos esa key y la volvemos una constante
+	const URL = `http://ws.audioscrobbler.com/2.0/?
+		method=geo.gettopartists&country=peru&api_key=${apiKey}&format=json`;
+		-> hacemos q la url con la key sea una constante
+	export default function getArtists() {
+  	return fetch(URL).then(res => res.json()).then(json => json.topartists.artist);
+	}
+	-> ahora creamos una funcion q le ponemos export proque luego la exportaremos pero
+	esta funcion primero recibe el json y filtra ese json para q se objeta el subjason 
+	de artistas con sus caracteristicas 
 
-
-
+Ahora en app.vue recibimos esta funcion y hacemos q se imprima en la vista, entonces la 
+parte de js de app.vue colocamos :
+	js :
+	import getArtists from "./api"; -> primero importamos la funcion getartist 
+			para su importacion solamente colocamso /api como esta dentro de 
+			index la funcion no es nesessario especificar el archivo
+	export default {
+    	name: 'app',
+    	data () {
+      	return {
+        	artists: [] -> inicializamos el objeto de artist como vacio
+      	}
+    	},
+    	mounted: function () {
+        	const self = this; -> con esto hacemos q al colocar this a partir de esta
+			linea de codigo se entienda q se hace referencia a este objeto y 
+			no al objeto windows 
+       		getArtists().then(function (artists) { self.artists = artists })
+			-> aca llamamos a la funcion q trajimos y hacemos q nuestro objeto
+			artists se reemplace por el valor json q trajimos con la funcion
+    	}
+  	}	
+	pug :
+	ahora con esto como en la parte de pug ya se tenia artist.name :
+		li(v-for="artist in artists") {{ artist.name }}
+		-> esto sigue funcionando ya q el subjason q se trajo tambien cada artista
+		tiene como caracteristica name donde se indica su nombre por lo q con esto
+		ya funciona todo :)
 
 
 
