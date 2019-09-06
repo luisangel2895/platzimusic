@@ -628,12 +628,68 @@ parte de js de app.vue colocamos :
 		ya funciona todo :)
 
 
+//Estructurando componentes en Vue.js
+Ahora separaremos las vistas y crearemos una vista solo para darle diseno a cada artista
+esta vista se llama componente, para esto creamos dentro de src una carpeta llamda 
+componentes y dentro de esta crearemos nuestro componente q llamaremos Artist.vue en este 
+componente crearemos una etiqueta q luego usaremos en app.vue , generalmente la etiqueta
+q se creara se le coloca el nombre del archivo osea Artist.vue en este caso para propositos
+didacticos le colocare ArtistLayer pero por reglas de vue sera llamado como artist-layer
+en app.vue esto es algo parecido a las relaciones de artisan en db
+Entonces dentro de Artist.vue creamos la etiqueta artist-layer :
+	<template lang="pug"> -> creamos su html con pug
+  	li.artist
+    		h2: a(:href="propartist.url" target="_blank") {{ propartist.name }}
+    		img(:src="propartist.image[2]['#text']")
+		-> aca vemos q su pug se creara a partir de una propiedad q recibira esta
+		etiqueta q yo coloque como nombre de la propiedad propartist entonces cuando
+		reciba esta propiedad se le sacaran sus sus prop a la prop recibida y con 
+		eso se crea la imagen del artista cabe notar q la propiedad q se recibiara
+		sera el artist en json q se obtendra de app.vue
+	</template>
 
+	<script>
+  	export default {
+      		name: 'ArtistLayer', -> este es el nombre de la etiqueta como tal pero para
+				usarla como se dijo se usara artist-layer
+      		props: ['propartist'] -> este es el nombre de la propiedad q definimos q 
+				tendra esta etiqueta y como se mostro arriba esta propiedad
+				q se recibira sera artist de app.vue
+  	}
 
+	</script>
 
+	<style lang="stylus" scoped> -> cuando se imprima toda la pagina se pondra primero 
+				el stylus de app.vue y luego el stylus de Artist.vue como 
+				solo se pone uno despues del otro es posible q se pisen las
+				propiedades si es q en ambos stylus hay elementos con el
+				mismo nombre, etc para evitar esto con "scoped" hacemos q 
+				dentro de este componente todos los li.artist tengan un 	
+				codigo unico por lo q si hay otro li.artist en app.vue no
+				habra un conflicto con sus propiedades y no se pisaran entre
+				si
+  		li.artist
+    		display block
+    		margin 10px 0
+	</style>	
+Ahora usaremos este componente en forma de etiqueta en app.vue :
+	ul
+ 		artist-layer(v-for="artist in artists" v-bind:propartist="artist" 
+		v-bind:key="artist.mbid")
+		-> como se menciono se usara el componente como etiqueta con el nombre 
+		artist-layer en este ponemos un for para usar esta etiqueta con cada 
+		artista y cada artista lo mandamos a la propiedad de la etiquet propartist
+		-> ademas agregamos v-bind:key como extra con el id de cada artista q 				nos da el json del API esto para propositos de seguridad y buen uso del api
 
+	<script>
+	import ArtistLayer from "./components/Artist"; -> agregamos un importa importando
+					el componente q crea la etiqueta
+	export default {
+      		components: {ArtistLayer},	-> y para q podamos usarlo dentro de app 
+				definimos la etiqueta como un componente de app 
 
-
+	-> y con esto funciona :) cabe senalar q la api actualmeente ya no nos da la imagen
+	de los artistas sino nos da una imagen generica de estrella xd
 
 
 

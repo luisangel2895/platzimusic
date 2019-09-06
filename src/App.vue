@@ -3,16 +3,17 @@
     img(src="./assets/logo.png")
     h1 PlatziMusic
     ul
-      li(v-for="artist in artists") {{ artist.name }}
-
+      artist-layer(v-for="artist in artists" v-bind:propartist="artist" v-bind:key="artist.mbid")
 
 </template>
 
 <script>
   import getArtists from "./api";
+  import ArtistLayer from "./components/Artist";
   export default {
     name: 'app',
-    data () {
+      components: {ArtistLayer},
+      data () {
       return {
         artists: []
       }
