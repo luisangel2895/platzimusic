@@ -770,7 +770,67 @@ en index.js se recibe el pais y con esto modificamos la url :
 
 //Agregando indicar de progres en el app
 Aca agregaremos un indicador q nos mostrara el proceso de carga de cada artista ya sea en 
-el montado o cuando se selecciona otro pais
+el montado o cuando se selecciona otro pais para esto primero vamos al buscador y buscamos
+css loader y vamos a cualquier pagina de recomendacion :
+ 	https://projects.lukehaas.me/css-loaders/
+Ahora a este loader le hacemos su componente en vue.js para esto dentro de componentes 
+creamos Spinner.vue y le colocamos :
+	<template>
+ 	<div class="loader">Loading...</div> -> este el el html del componente q 
+				tambien viene de la pagina
+	</template>
+	<script>
+  	export default  { -> en js solamente colocammos el nombre con el cual sera 
+			llamado como etiqueta en app.vue en este caso se le coloca un 
+			nombre en minusculas por lo q la etiqueta es identica "spinner"
+    	name: 'spinner'
+  	}
+	</script>
+	<style>
+		-> aca va el css del componente de la pagina
+	</style>
+
+Ahora q ya creamos el componente como etiqueta lo implementaremos en app.vue :
+	-entonces lo mostraremos antes de la lista de cantantes y pondremos la etiqueta :
+		spinner(v-show="loading")
+	-en data como valor inicial de loading lo colocamos true :
+		loading: true
+	-ahora este spiner sera llamado tanto para el proceso de carga del montaje como 
+	tambien para las cargas ante un cambio de pais entonces el spinner sera llamado
+	en la funcion refreshArtist :
+	
+	refreshArtists(){
+            const self = this;
+            this.loading = true; -> antes de q empiece a refrescar hacemos q aparerezca el 
+			loader dandole true
+            this.artists = []; -> limpiamos la pantalla momentaniamente mientras cargan los
+			artistas para q solo se vea el loader
+            getArtists(this.selectedCountry).then(function (artists)
+              {
+                  self.artists = artists; -> mostramos los artistas en la pantalla
+                  self.loading =  false -> dejamos de mostrar el loader
+              })
+        }
+
+	-> y con esta ya esta implementado el loader en el proyecto
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

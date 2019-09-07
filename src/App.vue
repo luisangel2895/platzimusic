@@ -4,6 +4,7 @@
     h1 PlatziMusic
     select(v-model="selectedCountry")
       option(v-for="country in countries" v-bind:value="country.value") {{ country.name }}
+    spinner(v-show="loading")
     ul
       artist-layer(v-for="artist in artists" v-bind:propartist="artist" v-bind:key="artist.mbid")
 
@@ -12,9 +13,10 @@
 <script>
   import getArtists from "./api";
   import ArtistLayer from "./components/Artist";
+  import Spinner from "./components/Spinner";
   export default {
     name: 'app',
-      components: {ArtistLayer},
+      components: {Spinner, ArtistLayer},
       data () {
       return {
         artists: [],
@@ -24,13 +26,20 @@
             {name: 'Espana', value: 'spain'}
 
         ],
-        selectedCountry: 'argentina'
+        selectedCountry: 'argentina',
+        loading: true
       }
     },
     methods: {
         refreshArtists(){
             const self = this;
-            getArtists(this.selectedCountry).then(function (artists) { self.artists = artists })
+            this.loading = true;
+            this.artists = [];
+            getArtists(this.selectedCountry).then(function (artists)
+              {
+                  self.artists = artists;
+                  self.loading =  false
+              })
         }
     },
     mounted() {
