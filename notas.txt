@@ -691,7 +691,86 @@ Ahora usaremos este componente en forma de etiqueta en app.vue :
 	-> y con esto funciona :) cabe senalar q la api actualmeente ya no nos da la imagen
 	de los artistas sino nos da una imagen generica de estrella xd
 
+//Actualizando datos en la interfaz con Vue.js
+Ahora agregaremos en el proyecto un selector donde podremos seleccionar de entre 3 paises
+el top de q pais queremos q muestre en la vista
+Primero agregamos el selector en app.vue y configuramos para q la funcion de montado reciba
+como parametro el pais q se mandara desde index.js entonces en app.vue :
+     pug :
+     select(v-model="selectedCountry")
+      	option(v-for="country in countries" v-bind:value="country.value") {{ country.name }}
+	-> primero entonces agregamos un selector q lo convertimos en modelo para poder 
+	recibir como una variable lo q la gente selecciona , este selector se crear a partir
+	de un arrego countries q se define en js q es un arreglo de paises, entonces si la 
+	getne selecciona un pais este se define como un objeto en js llamado selectedCountry
 
+		
+     js :
+    export default {
+    name: 'app',
+      components: {ArtistLayer},
+      data () {
+      return {
+        artists: [],
+        countries: [ -> en js primero definimos el arreglo de paises con sus valores estos 
+		valores estan en funcion de una iso q usa el API para ponerle un nombre 
+		estandar a cada pais generlamente es el nombre de pais en ingles
+            {name: 'Argentina', value: 'argentina'},
+            {name: 'Peru', value: 'peru'},
+            {name: 'Espana', value: 'spain'}
+
+        ],
+        selectedCountry: 'argentina' -> aca definimos  pais vendra seleccionado por defecto
+		por lo q sera el q se montara al inicio
+      }
+    },
+    methods: { 
+        refreshArtists(){
+            const self = this;
+            getArtists(this.selectedCountry).then(function (artists) 
+		{ self.artists = artists })
+        }
+    },
+	-> nosotros como ahora haremos una vista interactiva ya no pondremos la logica de la
+	impresion de la vista en solo el montado sino q lo separamos y lo colocamos en un 
+	metodo llamado refreshArtist este metodo sera llamado en el montado inicial y ademas
+	en watch, ademas en este metodo se actualiza la vista deacurdo al pais q tenemos 
+	q enviar como variables this.selectedCountry a index.js
+    mounted() {
+        this.refreshArtists()
+    },
+    watch: {
+        selectedCountry: function () {
+            this.refreshArtists()
+        }
+	-> watch hace referencia a los objetos q seran constantemente observados por vue 
+	y cuando ocurra un cambio en ellos se ejecutara el metodo q se ponga en watch para
+	caundo el elemento tiene un cambio, en este caso si lo q se selecciona cambia 
+	entonces se aplica el metodo refreshArtist q actualiza la vista deacuerdo al pais
+    }
+  }
+
+
+Entonces ahora para completar el proceso de actualizacion de vista de acuerdo al pais 
+en index.js se recibe el pais y con esto modificamos la url :
+	const URL = `http://ws.audioscrobbler.com/2.0/?
+	method=geo.gettopartists&country=:country&api_key=${apiKey}&format=json`;
+		-> notese q en la url se coloco "country=:country" esto para q luego
+		reemplacemos :country por el pais q recibamos de app.vue mediante el 
+		metodo replace
+	export default function getArtists( country ) { -> ahora en app.vue se envia el pais
+			aca lo recibimos 
+  	const url = URL.replace(':country', country); -> y aqui deacuerdo al pais recibido
+			cambiamos la url por la url con el pais q deseamos 
+  	console.log(url);
+  	return fetch(url).then(res => res.json()).then(json => json.topartists.artist);
+	}
+
+	-> y con esto funciona bien el cambio de paises :)
+
+//Agregando indicar de progres en el app
+Aca agregaremos un indicador q nos mostrara el proceso de carga de cada artista ya sea en 
+el montado o cuando se selecciona otro pais
 
 
 
