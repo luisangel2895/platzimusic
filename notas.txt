@@ -814,6 +814,44 @@ Ahora q ya creamos el componente como etiqueta lo implementaremos en app.vue :
 
 	-> y con esta ya esta implementado el loader en el proyecto
 
+//Enviando una palicacion con Vue.js a produccion 
+Enviaremos el proyecto a git-hub pages q es un hosting q nos da git-hub para proyectos 
+estaticos osea solo frontend, entonces vamos a nuestra cuenta de git hub y ponemos para 
+crear un nuevo repo con nombre platzimusic, y ahora desde el repo local del proyecto lo 
+enviamos al repo de git hub para esto copiamos el link del repo q creamos en git-hub q 
+es : git@github.com:luisangel2895/platzimusic.git y en la consola desde el repo local en el
+proyecto :
+	git remote add origin git@github.com:luisangel2895/platzimusic.git
+	-> hay q asegurarse q en gitignore tenemos nodemodules ignorado q en la plantilla
+	ya esta por defecto, con este comando de git se sincroniza este repo con el repo
+	de git hub
+
+Ahora tenemos q generar nuestro archivo de disribucion este archivo tendra todos los
+node_modules pero de manera minificada ademas de demas compoenentes de js para el proyecto
+, nosotros para correr el proyecto haciamso : nmp run dev q significaba q corriamos el 
+proyecto en modo dev pero si hacemos: npm run build no correra el prooyecto ya q el 
+proyecto se correra en un servidor sino q generara los archivos llamados de distribucion 
+q se usaran en el servidor para interpretar vue como se menciono estos archivos estan de 
+manera minificada
+Entonces luego de poner: npm run build nos creamos una carpeta /dist con los archivos de 
+districucion ahora como llevaremos le proyecto a distribucion debemos de quitar a /dist
+de gitignore ahora commiteamos el proyecto y luego hacemos :
+	git push origin master
+	-> con esto llevamos nuestro repo local al repo remoto
+
+
+
+
+
+
+
+En github en la configuracion del repo ponemos q se inicialice desde el master branch
+
+Ahora debemos de mandar el proyecto a git-hub pero con la configuracion build y no la dev
+q hemos estado usando hasta ahora con la platilla
+
+	
+	
 
 
 
