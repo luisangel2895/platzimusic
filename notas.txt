@@ -839,16 +839,25 @@ de gitignore ahora commiteamos el proyecto y luego hacemos :
 	git push origin master
 	-> con esto llevamos nuestro repo local al repo remoto
 
+Ahora en el repo remoto configuramos para q esta sea la rama master, luego nos dirigimos a
+github pages y nos da un link q es el link del proyecto, vemos q por el mometo no se ve nada
+esto es debido a q en el proyecto le colocamos links relativos para los recuros como /dist
+ahora par arreglar esto en el codigo pondremo links absoluos desde la ubicacion de nuestros
+recursos dentro de git hub :
+	en index.html :
+	 <script src="https://luisangel2895.github.io/platzimusic/dist/build.js"></script>
+	en app.vue :
+	  img(src="https://luisangel2895.github.io/platzimusic/dist/logo.png")
+	-> estos links q modificamos a hacerlos abslutos se hacen en funcion a la carpeta 
+	/dist ya q esa carpeta se exporto al servidor y ahi se encuentra todo el contenido
+	de nuestro proyecto como las imagenes y los node_modules minificados
+Ahora q modificamos la ubicacion de los recurosos volvemos a commitear el proyecto y lo 
+llevamos al remoto con un :
+	git push origin master
 
 
 
-
-
-
-En github en la configuracion del repo ponemos q se inicialice desde el master branch
-
-Ahora debemos de mandar el proyecto a git-hub pero con la configuracion build y no la dev
-q hemos estado usando hasta ahora con la platilla
+	
 
 	
 	
