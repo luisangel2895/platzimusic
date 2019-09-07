@@ -855,7 +855,15 @@ Ahora q modificamos la ubicacion de los recurosos volvemos a commitear el proyec
 llevamos al remoto con un :
 	git push origin master
 
-
+Con esto el proyecto corre pero no se muestra como tal primero:
+	-para q se muestre algo del proyecto hay q entrar como 
+		https://luisangel2895.github.io/platzimusic/index.html
+	-no se muestra el logo al parecer por un error de seguridad de vue al subir el
+	proyecto
+	-no se muestran los artistas al parecer porque considera al api isegura para su 
+	servidor
+	-> entonces solamente se pueden mostrar proyectos muy simples en github ya q si le
+	ponene algun framework de js se loquea xd
 
 	
 
