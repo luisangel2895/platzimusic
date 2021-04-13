@@ -1,6 +1,6 @@
-# platzimusic
+# GuitarSPA
 
-> un app de platzi con vue
+> Una SPA acerca de guitarras hecha con Vue.js.
 
 ## Build Setup
 
